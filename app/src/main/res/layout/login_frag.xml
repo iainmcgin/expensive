@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="io.demoapp.expensive.login.LoginViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:indeterminate="true"
+            android:layout_gravity="center_horizontal"
+            android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:textAlignment="center"
+            android:text="@{viewmodel.loadingLabel}"
+            android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:textAlignment="textStart"
+            android:gravity="start|bottom"
+            android:text="@{viewmodel.actionPrompt}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:visibility="@{viewmodel.loading ? View.GONE : View.VISIBLE}"/>
+        
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="@{viewmodel.showEmailPrompt ? View.VISIBLE : View.INVISIBLE}" >
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/email"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email_input_label"
+                android:text="@={viewmodel.email}"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:visibility="@{viewmodel.showPasswordPrompt ? View.VISIBLE : View.INVISIBLE}" >
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/password"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_input_label"
+                android:text="@={viewmodel.password}"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:onClick="@{viewmodel::signInButtonClicked}"
+            android:visibility="@{viewmodel.loading ? View.GONE : View.VISIBLE}"
+            android:src="@drawable/ic_done" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/auth_failure"
+            android:textAlignment="center"
+            android:visibility="@{viewmodel.errorShown ? View.VISIBLE : View.GONE}" />
+
+    </LinearLayout>
+</layout>
